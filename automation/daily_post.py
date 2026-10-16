@@ -273,7 +273,8 @@ def main():
         if not str(exc).startswith("API HTTP 404:"):
             raise
     else:
-        raise RuntimeError("Today's image already exists; refusing a duplicate post")
+        print("Today's image already exists; skipping a duplicate post")
+        return
     try:
         event = recent_event()
     except (RuntimeError, ValueError) as exc:
