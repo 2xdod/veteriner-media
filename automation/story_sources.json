@@ -1,0 +1,14 @@
+{
+  "accounts": [
+    {
+      "username": "haytap",
+      "name": "HAYTAP Hayvan Hakları Federasyonu",
+      "source": "https://www.haytap.org/tr/haytap-markasiyla-yapilan-nitelikli-dolandiricilik"
+    },
+    {
+      "username": "haytapsahiplendirme",
+      "name": "HAYTAP Sahiplendirme",
+      "source": "https://www.haytap.org/tr/biz-kimiz"
+    }
+  ]
+}

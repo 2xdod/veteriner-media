@@ -1,0 +1,46 @@
+name: Story discovery pilot
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Önce bağlantıyı kontrol et; sonra ücretsiz Story denemesi'
+        type: choice
+        options:
+          - check_setup
+          - collect
+        default: check_setup
+        required: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: veteriner-story-pilot
+  cancel-in-progress: false
+
+jobs:
+  review:
+    if: github.actor == github.repository_owner
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      PILOT_MODE: ${{ inputs.mode }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check pilot limits
+        run: python -m unittest discover -s tests -p 'test_story_pilot.py' -v
+      - name: Check access or collect for review
+        run: |
+          if [ "$PILOT_MODE" = "check_setup" ]; then
+            python automation/story_pilot.py --check-setup
+          else
+            python automation/story_pilot.py
+          fi
