@@ -13,6 +13,6 @@ GitHub'da bu deponun **Settings → Secrets and variables → Actions → New re
 
 Instagram uzun ömürlü tokenı yaklaşık 60 günde sona erer; yenileme henüz otomatik değildir. Süresi dolmadan yeni tokenı aynı `IG_ACCESS_TOKEN` secret'ına girmeniz gerekir. Bu sınır giderilene kadar sürekli, süresiz çalıştığını varsaymayın. GitHub'ın planlanan işleri birkaç dakika geciktirebilmesi de mümkündür.
 
-Başarısız işlemlerde gönderi yayımlanmaz ve Actions kayıtlarında hata görünür. Yayın çağrısından sonra ağ yanıtı kaybolursa gönderi yapılmış olabilir; betik otomatik tekrar denemez. Günlük dosya varsa aynı günün sonraki çalışması mükerrer gönderi oluşturmadan başarılı biçimde atlanır.
+Başarısız işlemlerde gönderi yayımlanmaz ve Actions kayıtlarında hata görünür. Yayın çağrısından sonra ağ yanıtı kaybolursa gönderi yapılmış olabilir; betik otomatik tekrar denemez. Zamanlanmış yayınlar günlük dosyayı, elle başlatılan denemeler ise GitHub çalışma kimliğini taşıyan ayrı dosyaları kullanır. Böylece sabah yapılan bir deneme akşamın günlük paylaşımını engellemez; günlük yedek tetikler aynı gün ikinci kez paylaşmaz.
 
 Story etiketlerinin onaylı yeniden paylaşımı bu iş akışında yoktur; o ayrı bir onay sürecidir.

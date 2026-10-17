@@ -158,7 +158,21 @@ def wrap(draw, text, face, width):
     return lines + ([line] if line else [])
 
 
-def make_image(post):
+def post_path():
+    event = os.environ.get("GITHUB_EVENT_NAME")
+    if event == "schedule":
+        filename = f"{TODAY}-veteriner.jpg"
+    elif event == "workflow_dispatch":
+        run_id = os.environ.get("GITHUB_RUN_ID", "")
+        if not run_id.isdecimal():
+            raise RuntimeError("Missing GitHub run ID; nothing published")
+        filename = f"{TODAY}-manual-{run_id}-veteriner.jpg"
+    else:
+        raise RuntimeError("Unexpected workflow event; nothing published")
+    return ROOT / "posts" / filename
+
+
+def make_image(post, path):
     result = openai("images/generations", {
         "model": IMAGE_MODEL,
         "prompt": (
@@ -193,7 +207,6 @@ def make_image(post):
         y += 5
     if y > 1305:
         raise RuntimeError("Bullet text does not fit poster; nothing published")
-    path = ROOT / "posts" / f"{TODAY}-veteriner.jpg"
     path.parent.mkdir(exist_ok=True)
     canvas.save(path, "JPEG", quality=90, optimize=True)
     return path
@@ -266,14 +279,14 @@ def main():
         raise RuntimeError("Set OPENAI_API_KEY and IG_ACCESS_TOKEN as repository Actions secrets")
     if REPO != "2xdod/veteriner-media":
         raise RuntimeError("Unexpected GitHub repository; nothing published")
-    path = ROOT / "posts" / f"{TODAY}-veteriner.jpg"
+    path = post_path()
     try:
         github("GET", f"contents/{path.relative_to(ROOT).as_posix()}")
     except RuntimeError as exc:
         if not str(exc).startswith("API HTTP 404:"):
             raise
     else:
-        print("Today's image already exists; skipping a duplicate post")
+        print("This workflow run already has an image; skipping a duplicate post")
         return
     try:
         event = recent_event()
@@ -281,7 +294,7 @@ def main():
         print(f"Recent-event research unavailable ({type(exc).__name__}); using evergreen topic")
         event = None
     post = draft(event)
-    image_url = upload(make_image(post))
+    image_url = upload(make_image(post, path))
     publish(image_url, post["caption"])
 
 
