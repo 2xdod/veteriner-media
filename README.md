@@ -1,6 +1,6 @@
 # @veteriner otomatik paylaşım
 
-Her gün Türkiye saatiyle 20:00'de GitHub Actions bir özgün görsel ve metin hazırlar, görseli bu depoda `posts/` altına koyar, sonra Instagram API ile @veteriner hesabında yayımlar. Güncel olay yalnızca iki bağımsız kaynakla doğrulanabildiğinde kullanılır; aksi halde genel hayvan sağlığı bilgisi seçilir. Görsel temsili illüstrasyondur.
+Her gün Türkiye saatiyle 20:03'ten başlayarak GitHub Actions bir özgün görsel ve metin hazırlar, görseli bu depoda `posts/` altına koyar, sonra Instagram API ile @veteriner hesabında yayımlar. GitHub zamanlanmış işleri geciktirebildiğinden 20:13, 20:23 ve 20:33'te yedek tetikler vardır; aynı günün sonraki çalışmaları ikinci post atmaz. Güncel olay yalnızca iki bağımsız kaynakla doğrulanabildiğinde kullanılır; aksi halde genel hayvan sağlığı bilgisi seçilir. Görsel temsili illüstrasyondur.
 
 ## Bir defalık kurulum
 
@@ -9,7 +9,7 @@ GitHub'da bu deponun **Settings → Secrets and variables → Actions → New re
 - `OPENAI_API_KEY`: OpenAI API anahtarı; ChatGPT aboneliğinden ayrı API kullanımı ücretlendirilir.
 - `IG_ACCESS_TOKEN`: @veteriner Instagram Login için uzun ömürlü erişim tokenı ve yayın izni. Tokenı koda, issue'ya veya sohbete yapıştırmayın.
 
-İki gizli değer eklenene kadar zamanlanmış iş hata verip durur; paylaşım yapılmaz. İlk kurulumdan sonra **Actions → Daily Instagram post → Run workflow** ile bir deneme yapıp gerçek Instagram bağlantısını doğrulayın. Bunu yalnızca ilk kurulumda yapmanız gerekir. Günlük 20:00 işlemi ayrıca onay sormaz.
+İki gizli değer eklenene kadar zamanlanmış iş hata verip durur; paylaşım yapılmaz. İlk kurulumdan sonra **Actions → Daily Instagram post → Run workflow** ile bir deneme yapıp gerçek Instagram bağlantısını doğrulayın. Bunu yalnızca ilk kurulumda yapmanız gerekir. Günlük işlem ayrıca onay sormaz.
 
 Instagram uzun ömürlü tokenı yaklaşık 60 günde sona erer; yenileme henüz otomatik değildir. Süresi dolmadan yeni tokenı aynı `IG_ACCESS_TOKEN` secret'ına girmeniz gerekir. Bu sınır giderilene kadar sürekli, süresiz çalıştığını varsaymayın. GitHub'ın planlanan işleri birkaç dakika geciktirebilmesi de mümkündür.
 

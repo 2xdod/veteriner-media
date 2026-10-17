@@ -2,7 +2,9 @@ name: Daily Instagram post
 
 on:
   schedule:
-    - cron: '0 17 * * *' # 20:00 Europe/Istanbul (UTC+3 year-round)
+    # 20:03 with staggered retries; GitHub may delay or drop a schedule event.
+    # The daily-image guard makes all later starts no-ops after one post.
+    - cron: '3,13,23,33 17 * * *' # Europe/Istanbul (UTC+3 year-round)
   workflow_dispatch:
 
 permissions:
